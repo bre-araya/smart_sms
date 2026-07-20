@@ -1,0 +1,223 @@
+// Prisma schema for Smart SMS core entities
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum StudentStatus {
+  ACTIVE
+  GRADUATED
+  WITHDRAWN
+  SUSPENDED
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum EnrollmentStatus {
+  ENROLLED
+  TRANSFERRED
+  GRADUATED
+  WITHDRAWN
+  SUSPENDED
+}
+
+model Role {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @unique
+  description String?
+  users       User[]
+  deletedAt   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model User {
+  id           String      @id @default(uuid()) @db.Uuid
+  firstName    String
+  lastName     String
+  email        String      @unique
+  phone        String?     @unique
+  passwordHash String
+  status       UserStatus  @default(ACTIVE)
+  roleId       String
+  role         Role        @relation(fields: [roleId], references: [id])
+  student      Student?
+  teacher      Teacher?
+  guardian     Guardian?
+  deletedAt    DateTime?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@index([roleId])
+}
+
+model Guardian {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @unique
+  user       User      @relation(fields: [userId], references: [id])
+  students   Student[]
+  deletedAt  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model School {
+  id            String             @id @default(uuid()) @db.Uuid
+  name          String
+  code          String             @unique
+  address       String?
+  isActive      Boolean            @default(true)
+  academicYears AcademicYear[]
+  teachers      Teacher[]
+  students      Student[]
+  deletedAt     DateTime?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  @@unique([name, code])
+}
+
+model AcademicYear {
+  id          String             @id @default(uuid()) @db.Uuid
+  schoolId    String
+  year        String
+  isActive    Boolean            @default(false)
+  school      School             @relation(fields: [schoolId], references: [id])
+  enrollments StudentEnrollment[]
+  deletedAt   DateTime?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@unique([schoolId, year])
+  @@index([schoolId])
+}
+
+model Grade {
+  id         String    @id @default(uuid()) @db.Uuid
+  name       String
+  code       String    @unique
+  sections   Section[]
+  deletedAt  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@unique([name, code])
+}
+
+model Section {
+  id              String             @id @default(uuid()) @db.Uuid
+  name            String
+  gradeId         String
+  grade           Grade              @relation(fields: [gradeId], references: [id])
+  enrollments     StudentEnrollment[]
+  teacherSubjects TeacherSubject[]
+  deletedAt       DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([gradeId])
+  @@unique([name, gradeId])
+}
+
+model Subject {
+  id              String           @id @default(uuid()) @db.Uuid
+  name            String
+  code            String           @unique
+  teacherSubjects TeacherSubject[]
+  deletedAt       DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model Teacher {
+  id         String           @id @default(uuid()) @db.Uuid
+  userId     String           @unique
+  schoolId   String
+  user       User             @relation(fields: [userId], references: [id])
+  school     School           @relation(fields: [schoolId], references: [id])
+  department String?
+  subjects   TeacherSubject[]
+  deletedAt  DateTime?
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  @@index([schoolId])
+}
+
+model TeacherSubject {
+  id         String    @id @default(uuid()) @db.Uuid
+  teacherId  String
+  subjectId  String
+  sectionId  String
+  teacher    Teacher   @relation(fields: [teacherId], references: [id])
+  subject    Subject   @relation(fields: [subjectId], references: [id])
+  section    Section   @relation(fields: [sectionId], references: [id])
+  deletedAt  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@unique([teacherId, subjectId, sectionId])
+  @@index([teacherId])
+  @@index([subjectId])
+  @@index([sectionId])
+}
+
+model Student {
+  id              String              @id @default(uuid()) @db.Uuid
+  userId          String              @unique
+  schoolId        String
+  guardianId      String?
+  admissionNumber String              @unique
+  dateOfBirth     DateTime
+  gender          Gender
+  status          StudentStatus       @default(ACTIVE)
+  enrollmentDate  DateTime            @default(now())
+  user            User                @relation(fields: [userId], references: [id])
+  guardian        Guardian?           @relation(fields: [guardianId], references: [id])
+  school          School              @relation(fields: [schoolId], references: [id])
+  enrollments     StudentEnrollment[]
+  deletedAt       DateTime?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@index([userId])
+  @@index([schoolId])
+  @@index([guardianId])
+}
+
+model StudentEnrollment {
+  id             String           @id @default(uuid()) @db.Uuid
+  studentId      String
+  academicYearId String
+  sectionId      String
+  status         EnrollmentStatus @default(ENROLLED)
+  enrollmentDate DateTime         @default(now())
+  student        Student          @relation(fields: [studentId], references: [id])
+  academicYear   AcademicYear     @relation(fields: [academicYearId], references: [id])
+  section        Section          @relation(fields: [sectionId], references: [id])
+  deletedAt      DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@unique([studentId, academicYearId])
+  @@index([studentId])
+  @@index([academicYearId])
+  @@index([sectionId])
+}
