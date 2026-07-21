@@ -5,13 +5,13 @@ import StatCard from "@/components/dashboard/StatCard";
 import RecentActivity from "@/components/dashboard/RecentActivity";
 import QuickActions from "@/components/dashboard/QuickActions";
 import AcademicOverview from "@/components/dashboard/AcademicOverview";
-import styles from "./page.module.css";
+import styles from "./page.module.css"; 
 
 export default function Dashboard() {
-  const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState(null); // State to hold the dashboard statistics
+  const [loading, setLoading] = useState(true); // State to manage the loading state of the dashboard
 
-  useEffect(() => {
+  useEffect(() => { // Simulate fetching data from an API but currently using mock data for demonstration purposes
     // Mock data - will be replaced with API calls
     const mockStats = {
       totalStudents: 1250,
@@ -28,8 +28,8 @@ export default function Dashboard() {
     }, 500);
   }, []);
 
-  if (loading) {
-    return <div className={styles.loading}>Loading dashboard...</div>;
+  if (loading) { // Display a loading message while the dashboard data is being fetched
+    return <div className={styles.loading}>Loading dashboard...</div>; 
   }
 
   return (
@@ -47,7 +47,7 @@ export default function Dashboard() {
 
       {/* Stats Grid */}
       <div className={styles.statsGrid}>
-        <StatCard
+        <StatCard // StatCard component is used to display individual statistics in a card format. Each card shows a title, value, icon, trend, and color.
           title="Total Students"
           value={stats.totalStudents}
           icon="👥"

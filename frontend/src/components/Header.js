@@ -1,4 +1,4 @@
-"use client";
+"use client"; // This directive is used in Next.js to indicate that the component should be rendered on the client side. It allows the use of client-side features such as state and effects.
 
 import Link from "next/link";
 import styles from "./Header.module.css";
