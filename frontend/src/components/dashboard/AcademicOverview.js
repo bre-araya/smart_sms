@@ -1,33 +1,6 @@
 import styles from "./AcademicOverview.module.css";
 
-export default function AcademicOverview() {
-  const academicData = [
-    {
-      id: 1,
-      school: "Central High School",
-      totalStudents: 450,
-      totalTeachers: 30,
-      activeGrades: 6,
-      enrollment: 98,
-    },
-    {
-      id: 2,
-      school: "St. Mary's Academy",
-      totalStudents: 380,
-      totalTeachers: 25,
-      activeGrades: 5,
-      enrollment: 95,
-    },
-    {
-      id: 3,
-      school: "Green Valley School",
-      totalStudents: 220,
-      totalTeachers: 15,
-      activeGrades: 3,
-      enrollment: 92,
-    },
-  ];
-
+export default function AcademicOverview({ schools = [] }) {
   return (
     <div className={styles.academicOverview}>
       <div className={styles.header}>
@@ -50,19 +23,19 @@ export default function AcademicOverview() {
             </tr>
           </thead>
           <tbody>
-            {academicData.map((school) => (
+            {schools.map((school) => (
               <tr key={school.id}>
-                <td className={styles.schoolName}>{school.school}</td>
-                <td>{school.totalStudents}</td>
-                <td>{school.totalTeachers}</td>
-                <td>{school.activeGrades}</td>
+                <td className={styles.schoolName}>{school.name}</td>
+                <td>{school.studentCount}</td>
+                <td>{school.teacherCount}</td>
+                <td>{school.gradeCount}</td>
                 <td>
                   <div className={styles.enrollmentBar}>
                     <div
                       className={styles.enrollmentFill}
-                      style={{ width: `${school.enrollment}%` }}
+                      style={{ width: `${school.enrollmentRate}%` }}
                     ></div>
-                    <span className={styles.enrollmentText}>{school.enrollment}%</span>
+                    <span className={styles.enrollmentText}>{school.enrollmentRate}%</span>
                   </div>
                 </td>
               </tr>
