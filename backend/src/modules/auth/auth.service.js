@@ -18,7 +18,9 @@ class AuthService {
 
   async login({ email, password }) {
     const user = await this.repository.findActiveUserByEmail(email);
-    const passwordMatches = user ? await bcrypt.compare(password, user.password_hash) : false;
+    const passwordMatches = user 
+                      ? await bcrypt.compare(password, user.password_hash) 
+                      : false;
 
     if (!passwordMatches || user.status !== 'ACTIVE') {
       throw new AuthenticationError();

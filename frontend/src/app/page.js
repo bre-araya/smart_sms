@@ -36,6 +36,7 @@ export default function Home() {
 
   return (
     <main className={styles.page}>
+      {/* Navigation Bar */}
       <nav className={styles.navbar}>
         <div className={styles.navContainer}>
           <div className={styles.logo}>
@@ -51,6 +52,7 @@ export default function Home() {
         </div>
       </nav>
 
+      {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <p className={styles.eyebrow}>Welcome to Smart SMS</p>
@@ -73,6 +75,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Features Section */}
       <section id="features" className={styles.features}>
         <div className={styles.featuresHeader}>
           <h2>Powerful Features</h2>
@@ -90,6 +93,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CTA Section */}
       <section className={styles.ctaSection}>
         <div className={styles.ctaContent}>
           <h2>Ready to Transform Your School?</h2>
@@ -98,6 +102,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Footer */}
       <footer className={styles.footer}>
         <p>&copy; 2024 Smart SMS. All rights reserved.</p>
       </footer>
