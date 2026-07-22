@@ -5,11 +5,11 @@ const { buildDashboardPayload } = require('../src/services/dashboard.service');
 
 test('buildDashboardPayload returns the expected dashboard structure', () => {
   const payload = buildDashboardPayload({
-    students: 1250,
-    teachers: 85,
+    students: 1050,
+    teachers: 80,
     schools: 5,
     enrollments: 1180,
-    term: 'Term 2, 2024',
+    term: 'Term 2, 2026',
     pendingTasks: 12,
     schoolRows: [
       {
