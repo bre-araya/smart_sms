@@ -1,9 +1,9 @@
-import { Pool } from "pg";
-import dotenv from "dotenv";
+const { Pool } = require("pg");
+const dotenv = require("dotenv");
 
-dotenv.config();
+dotenv.config({ path: require("path").resolve(__dirname, "../../.env") });
 
-export const db = new Pool({
+const db = new Pool({
     host: process.env.DATABASE_HOST,
     port: Number(process.env.DATABASE_PORT),
     user: process.env.DATABASE_USER,
@@ -11,10 +11,16 @@ export const db = new Pool({
     database: process.env.DATABASE_NAME,
 });
 
-db.on("connect", () => {
-    console.log("✅ PostgreSQL connected");
+db.on("error", (error) => {
+    console.error("PostgreSQL pool error:", error);
 });
 
-db.on("error", (error) => {
-    console.error("❌ PostgreSQL error:", error);
-});
+async function connectDatabase() {
+    await db.query("SELECT 1");
+    console.log("PostgreSQL connected");
+}
+
+module.exports = {
+    db,
+    connectDatabase,
+};

@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const dashboardRoutes = require('./routes/dashboard.routes');
+const authRoutes = require('./modules/auth/auth.routes');
 
 const app = express();
 
@@ -21,12 +22,14 @@ app.get("/health", (req, res) => {
 });
 
 app.use('/api', dashboardRoutes);
+app.use('/api/v1/auth', authRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({
-    message: "Internal server error",
-    error: err.message,
+    success: false,
+    message: err.status === 401 ? err.message : "Internal server error",
+    data: null,
   });
 });
 
