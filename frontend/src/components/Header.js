@@ -103,7 +103,7 @@ export default function Header() {
               type="button"
               onClick={() => setMenuOpen((value) => !value)}
             >
-              {user.name || "Account"} ▾
+              {user.name || `${user.firstName || ""} ${user.lastName || ""}`.trim() || "Account"} ▾
             </button>
             <div className={`${styles.authMenu} ${menuOpen ? styles.open : ""}`}>
               <Link

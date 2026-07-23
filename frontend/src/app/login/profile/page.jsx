@@ -45,7 +45,7 @@ export default function ProfilePage() {
     <div className={styles.infoCard}>
       <div className={styles.infoRow}>
         <span className={styles.infoLabel}>Name</span>
-        <span>{user.name || "—"}</span>
+        <span>{user.name || `${user.firstName || ""} ${user.lastName || ""}`.trim() || "—"}</span>
       </div>
 
       <div className={styles.infoRow}>
