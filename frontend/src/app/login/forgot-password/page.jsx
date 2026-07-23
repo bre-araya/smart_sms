@@ -2,22 +2,27 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import authService from "@/services/authService";
 import styles from "../Login.module.css";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
 
-    // Replace this delay with the password-reset API request later.
-    await new Promise((resolve) => setTimeout(resolve, 800));
-
-    setSubmitted(true);
-    setLoading(false);
+    try {
+      await authService.forgotPassword(email);
+      setSubmitted(true);
+    } catch (err) {
+      setError(err.message || "Unable to send reset instructions.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -59,6 +64,11 @@ export default function ForgotPasswordPage() {
               />
             </div>
 
+            {error && (
+              <div className={styles.error} role="alert">
+                {error}
+              </div>
+            )}
             <button
               type="submit"
               disabled={loading}

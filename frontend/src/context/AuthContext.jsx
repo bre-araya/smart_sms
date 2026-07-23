@@ -12,9 +12,32 @@ export function AuthProvider({ children }) { // Creating a provider component to
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
+
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+      return;
     }
+
+    if (!token) {
+      return;
+    }
+
+    authService
+      .getProfile()
+      .then((response) => {
+        if (response?.user) {
+          localStorage.setItem("user", JSON.stringify(response.user));
+          setUser(response.user);
+        } else {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      });
   }, []);
 
   async function login(credentials) {
@@ -24,19 +47,21 @@ export function AuthProvider({ children }) { // Creating a provider component to
       const response = await authService.login(credentials);
 
       localStorage.setItem("token", response.token);
-      localStorage.setItem("refreshToken", response.refreshToken);
       localStorage.setItem("user", JSON.stringify(response.user));
 
       setUser(response.user);
 
       window.location.href = "/dashboard";
+    } catch (error) {
+      throw error;
     } finally {
       setLoading(false);
     }
   }
 
   function logout() {
-    localStorage.clear();
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
 
     setUser(null);
 

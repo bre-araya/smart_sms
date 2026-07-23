@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
-import styles from "../Login.module.css";
+import styles from "./Profile.module.css";
 
 export default function ProfilePage() {
   const { user, logout } = useAuth();
@@ -27,53 +27,71 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className={styles.wrapper}>
-      <section className={styles.card}>
-        <div className={styles.logo} aria-hidden="true">
-          👤
+    <main className={styles.profileWrapper}>
+  <section className={styles.profileCard}>
+
+    <div className={styles.profileAvatar}>
+      👤
+    </div>
+
+    <h1 className={styles.profileTitle}>
+      My Profile
+    </h1>
+
+    <p className={styles.profileSubtitle}>
+      Manage your account information and security.
+    </p>
+
+    <div className={styles.infoCard}>
+      <div className={styles.infoRow}>
+        <span className={styles.infoLabel}>Name</span>
+        <span>{user.name || "—"}</span>
+      </div>
+
+      <div className={styles.infoRow}>
+        <span className={styles.infoLabel}>Email</span>
+        <span>{user.email || "—"}</span>
+      </div>
+
+      <div className={styles.infoRow}>
+        <span className={styles.infoLabel}>Role</span>
+        <span>{user.role || "—"}</span>
+      </div>
+
+      {user.phone && (
+        <div className={styles.infoRow}>
+          <span className={styles.infoLabel}>Phone</span>
+          <span>{user.phone}</span>
         </div>
+      )}
+    </div>
 
-        <h1>Your Profile</h1>
-        <p>Manage your account details and security settings.</p>
+    <div className={styles.actionButtons}>
+      <Link
+        href="/login/change-password"
+        className={styles.primaryButton}
+      >
+        Change Password
+      </Link>
 
-        <div className={styles.profileInfo}>
-          <div className={styles.profileRow}>
-            <span className={styles.profileLabel}>Name</span>
-            <span>{user.name || "—"}</span>
-          </div>
-          <div className={styles.profileRow}>
-            <span className={styles.profileLabel}>Email</span>
-            <span>{user.email || "—"}</span>
-          </div>
-          <div className={styles.profileRow}>
-            <span className={styles.profileLabel}>Role</span>
-            <span>{user.role || "—"}</span>
-          </div>
-          {user.phone && (
-            <div className={styles.profileRow}>
-              <span className={styles.profileLabel}>Phone</span>
-              <span>{user.phone}</span>
-            </div>
-          )}
-        </div>
+      <button
+        type="button"
+        className={styles.secondaryButton}
+        onClick={logout}
+      >
+        Logout
+      </button>
+    </div>
 
-        <div className={styles.profileActions}>
-          <Link href="/login/change-password" className={styles.loginButton}>
-            Change Password
-          </Link>
-          <button
-            type="button"
-            className={styles.backLink}
-            onClick={logout}
-          >
-            Logout
-          </button>
-        </div>
+    <Link
+      href="/dashboard"
+      className={styles.backButton}
+    >
+      ← Back to Dashboard
+    </Link>
 
-        <Link href="/dashboard" className={styles.backLink}>
-          Back to Dashboard
-        </Link>
-      </section>
-    </main>
-  );
+  </section>
+</main>
+  )
 }
+    

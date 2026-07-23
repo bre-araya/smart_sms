@@ -1,0 +1,152 @@
+.profileWrapper {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f4f8fc;
+    padding: 2rem;
+}
+
+.profileCard {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 22px;
+    padding: 0.5rem;
+    box-shadow: 0 20px 45px rgba(15,23,42,.08);
+}
+
+.profileAvatar {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#2563eb,#1d4ed8);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.4rem;
+    box-shadow: 0 10px 30px rgba(37,99,235,.3);
+}
+
+.profileTitle {
+    text-align: center;
+    color: #0f172a;
+    font-size: 2rem;
+    margin-bottom: .5rem;
+}
+
+.profileSubtitle {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
+.infoCard {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1rem 1.25rem;
+
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+
+    transition: all .25s ease;
+}
+
+.infoRow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
+    border-color: #93c5fd;
+}
+
+.infoLabel {
+    font-size: .95rem;
+    font-weight: 700;
+    color: #1e3a8a;
+}
+
+.infoRow span:last-child {
+    color: #334155;
+    font-weight: 500;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.primaryButton {
+    flex: 1;
+    padding: .9rem;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .25s;
+}
+
+.primaryButton:hover {
+    background: #1d4ed8;
+}
+
+.secondaryButton {
+    flex: 1;
+    padding: .9rem;
+    border: none;
+    border-radius: 10px;
+    background: #ef4444;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.secondaryButton:hover {
+    background: #dc2626;
+}
+
+.backButton {
+    display: block;
+    margin-top: 1.8rem;
+    text-align: center;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.backButton:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+
+    .profileCard {
+        padding: 1.5rem;
+    }
+
+    .actionButtons {
+        flex-direction: column;
+    }
+
+    .infoRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .4rem;
+    }
+}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import authService from "@/services/authService";
 import styles from "../Login.module.css";
 
 export default function ChangePasswordPage() {
@@ -34,9 +35,19 @@ export default function ChangePasswordPage() {
     }
 
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    setSubmitted(true);
-    setLoading(false);
+
+    try {
+      await authService.changePassword({
+        currentPassword: form.currentPassword,
+        newPassword: form.password,
+        confirmPassword: form.confirmPassword,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      setError(err.message || "Unable to change password.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

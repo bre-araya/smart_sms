@@ -5,9 +5,8 @@ import StatCard from "@/components/dashboard/StatCard";
 import RecentActivity from "@/components/dashboard/RecentActivity";
 import QuickActions from "@/components/dashboard/QuickActions";
 import AcademicOverview from "@/components/dashboard/AcademicOverview";
+import { request } from "@/services/apiClient";
 import styles from "./page.module.css";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
@@ -19,13 +18,7 @@ export default function Dashboard() {
 
     async function fetchDashboardData() {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/dashboard`);
-
-        if (!response.ok) {
-          throw new Error("Unable to load dashboard data");
-        }
-
-        const payload = await response.json();
+        const payload = await request("/api/dashboard");
 
         if (isMounted) {
           setData(payload);

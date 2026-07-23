@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import authService from "@/services/authService";
 import styles from "../Login.module.css";
 
 export default function ResetPasswordPage() {
@@ -29,9 +30,15 @@ export default function ResetPasswordPage() {
     }
 
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    setSubmitted(true);
-    setLoading(false);
+
+    try {
+      await authService.resetPassword(form);
+      setSubmitted(true);
+    } catch (err) {
+      setError(err.message || "Unable to reset password.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

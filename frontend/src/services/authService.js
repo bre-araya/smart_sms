@@ -1,51 +1,49 @@
-// later we will replace this with real API calls to the backend server for authentication
+import { request } from "./apiClient";
+
 const authService = {
+  login: async (credentials) => {
+    const response = await request("/api/v1/auth/login", {
+      method: "POST",
+      body: JSON.stringify(credentials),
+    });
 
-    login: async (credentials) => {
+    return response.data;
+  },
 
-        return new Promise((resolve,reject)=>{
+  forgotPassword: async (email) => {
+    const response = await request("/api/v1/auth/forgot-password", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    });
 
-            setTimeout(()=>{
+    return response.data;
+  },
 
-                if(
-                    credentials.email==="admin@school.com"
-                    &&
-                    credentials.password==="123456"
-                ){
+  resetPassword: async ({ token, password, confirmPassword }) => {
+    const response = await request("/api/v1/auth/reset-password", {
+      method: "POST",
+      body: JSON.stringify({ token, password, confirmPassword }),
+    });
 
-                    resolve({
+    return response.data;
+  },
 
-                        token:"jwt-token",
+  changePassword: async ({ currentPassword, newPassword, confirmPassword }) => {
+    const response = await request("/api/v1/auth/change-password", {
+      method: "POST",
+      body: JSON.stringify({ currentPassword, newPassword, confirmPassword }),
+    });
 
-                        refreshToken:"refresh-token",
+    return response.data;
+  },
 
-                        user:{
+  getProfile: async () => {
+    const response = await request("/api/v1/auth/profile", {
+      method: "GET",
+    });
 
-                            id:1,
-
-                            name:"School Admin",
-
-                            email:"admin@school.com",
-
-                            role:"Admin"
-                        }
-
-                    });
-
-                }else{
-
-                    reject(
-                        new Error("Invalid email or password.")
-                    );
-
-                }
-
-            },1200);
-
-        });
-
-    }
-
-}
+    return response.data;
+  },
+};
 
 export default authService;
