@@ -1,175 +1,268 @@
-.wrapper{
-    min-height: calc(100vh - 80px);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#f3f7fb;
-    padding:30px;
-    box-sizing: border-box;
+.wrapper {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: #f3f7fb;
+  box-sizing: border-box;
 }
 
-.card{
-
-    width:420px;
-
-    background:white;
-
-    border-radius:16px;
-
-    padding:40px;
-
-    box-shadow:0 10px 35px rgba(0,0,0,.08);
+/* Container only */
+.card {
+  max-width: 1100px;
+  width: fit-content;
+  margin: 0 auto;
 }
 
-.logo{
-
-    font-size:60px;
-
-    text-align:center;
-
-    margin-bottom:20px;
+/* Two side-by-side cards */
+.loginGrid {
+  display: grid;
+  grid-template-columns:400px 400px;
+  gap: 6rem;
+  justify-content: center;
 }
 
-.card h1{
+/* =========================
+   Logo Card
+========================= */
 
-    text-align:center;
+.logoPanel {
+  background: linear-gradient(135deg, #eef6ff 0%, #dbeafe 100%);
+  color: #0f2747;
+  border-radius: 20px;
+  padding: 3rem 2rem;
 
-    margin-bottom:10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-    color:#222;
+  text-align: center;
+
+  box-shadow: 0 20px 45px rgba(37, 99, 235, 0.25);
 }
 
-.card p{
-
-    text-align:center;
-
-    color:#666;
-
-    margin-bottom:30px;
+.logoImage {
+  background: rgba(255,255,255,.15);
+  padding: 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+   width: 320px;
+  height: auto;
+  max-width: 100%;
 }
 
-.group{
-
-    margin-bottom:20px;
+.logoPanel h2 {
+  margin: 1.5rem 0 .75rem;
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
-.group label{
-
-    display:block;
-
-    margin-bottom:8px;
-
-    font-weight:600;
+.logoPanel p {
+  line-height: 1.7;
+  color: #0f2747;
+  max-width: 280px;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
 }
 
-.group input{
+/* =========================
+   Login Card
+========================= */
 
-    width:100%;
+.formPanel {
+  background: #fff;
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, .08);
 
-    padding:14px;
-
-    border:1px solid #ddd;
-
-    border-radius:8px;
-
-    outline:none;
-
-    font-size:15px;
+  display: flex;
+  flex-direction: column;
 }
 
-.group input:focus{
-
-    border-color:#2563eb;
+.logo {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
-.options{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:25px;
-
-    font-size:14px;
+.formPanel h1 {
+  text-align: center;
+  color: #0f172a;
+  margin-bottom: .5rem;
 }
 
-.options a{
-
-    color:#2563eb;
-
-    text-decoration:none;
+.formPanel > p {
+  text-align: center;
+  color: #64748b;
+  margin-bottom: 2rem;
 }
 
-.loginButton{
+/* =========================
+   Form
+========================= */
 
-    width:100%;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:8px;
-
-    background:#2563eb;
-
-    color:white;
-
-    font-size:16px;
-
-    cursor:pointer;
-
-    transition:.3s;
+.group {
+  margin-bottom: 1.25rem;
 }
 
-.loginButton:hover{
-
-    background:#1d4ed8;
+.group label {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600;
+  color: #334155;
 }
 
-.loginButton:disabled{
-
-    background:#94a3b8;
-
-    cursor:not-allowed;
+.group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #dbe4ee;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: .25s;
+  box-sizing: border-box;
 }
 
-.error{
-
-    background:#fee2e2;
-
-    color:#dc2626;
-
-    padding:12px;
-
-    border-radius:8px;
-
-    margin-bottom:20px;
+.group input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+  outline: none;
 }
 
-.success{
+/* =========================
+   Options
+========================= */
 
-    background:#dcfce7;
-
-    color:#166534;
-
-    padding:12px;
-
-    border-radius:8px;
-
-    margin-bottom:20px;
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0 2rem;
+  font-size: .95rem;
 }
 
-.backLink{
+.options label {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  color: #475569;
+}
 
-    display:block;
+.options a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
 
-    margin-top:20px;
+.options a:hover {
+  text-decoration: underline;
+}
 
-    color:#2563eb;
+/* =========================
+   Button
+========================= */
 
-    text-align:center;
+.loginButton {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
+}
 
-    text-decoration:none;
+.loginButton:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.loginButton:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* =========================
+   Alerts
+========================= */
+
+.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: .9rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.success {
+  background: #ecfdf5;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  padding: .9rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.backLink {
+  display: block;
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 900px) {
+  .loginGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .logoPanel,
+  .formPanel {
+    padding: 2rem;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .wrapper {
+    padding: 1rem;
+  }
+
+  .logoPanel,
+  .formPanel {
+    padding: 1.5rem;
+  }
+
+  .logoPanel h2 {
+    font-size: 1.5rem;
+  }
+
+  .formPanel h1 {
+    font-size: 1.7rem;
+  }
+
+  .logo {
+    font-size: 2.5rem;
+  }
+
+  .options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 }

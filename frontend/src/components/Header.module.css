@@ -139,3 +139,70 @@
   color: #0F2747;
   border-color: #edebe6;
 }
+
+.authDropdown {
+  position: relative;
+}
+
+.authToggle {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #FFFFFF;
+  padding: 10px 24px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.authMenu {
+  position: absolute;
+  right: 0;
+  top: 110%;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 18px 45px rgba(15, 39, 71, .12);
+  min-width: 220px;
+  padding: 10px 0;
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: .2s ease;
+}
+
+.authMenu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.authMenuItem {
+  display: block;
+  width: 100%;
+  padding: 12px 18px;
+  color: #0F2747;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.authMenuItem:hover {
+  background: #f5f9ff;
+}
+
+.logoutBtn {
+  background: transparent;
+  color: #FFFFFF;
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 10px 24px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.logoutBtn:hover {
+  background: rgba(255,255,255,0.1);
+}

@@ -1,8 +1,21 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 import styles from "./Header.module.css";
 
 export default function Header() {
+  const { user, logout } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -83,10 +96,47 @@ export default function Header() {
 
         </nav>
 
-        {/* Login */}
-        <Link href="/login" className={styles.loginBtn}>
-          Login
-        </Link>
+        {user ? (
+          <div className={styles.authDropdown}>
+            <button
+              className={styles.authToggle}
+              type="button"
+              onClick={() => setMenuOpen((value) => !value)}
+            >
+              {user.name || "Account"} ▾
+            </button>
+            <div className={`${styles.authMenu} ${menuOpen ? styles.open : ""}`}>
+              <Link
+                href="/login/profile"
+                className={styles.authMenuItem}
+                onClick={() => setMenuOpen(false)}
+              >
+                Profile
+              </Link>
+              <Link
+                href="/login/change-password"
+                className={styles.authMenuItem}
+                onClick={() => setMenuOpen(false)}
+              >
+                Change Password
+              </Link>
+              <button
+                type="button"
+                className={styles.authMenuItem}
+                onClick={() => {
+                  setMenuOpen(false);
+                  logout();
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        ) : (
+          <Link href="/login" className={styles.loginBtn}>
+            Login
+          </Link>
+        )}
 
       </div>
     </header>
