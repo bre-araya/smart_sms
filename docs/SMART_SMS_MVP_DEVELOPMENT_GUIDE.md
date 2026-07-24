@@ -183,11 +183,6 @@ smart_sms/
 │   ├── package.json
 │   └── ...
 │
-├── database/
-│   ├── prisma/
-│   ├── migrations/
-│   ├── seed/
-│   └── backups/
 │
 ├── docs/
 │

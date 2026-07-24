@@ -16,7 +16,7 @@ const up = async (pgm) => {
 const down = async (pgm) => {
   await pgm.sql(`
     UPDATE users
-    SET phone = '+000000000'
+    SET phone = '+251 714 066 921'
     WHERE email = 'admin@smart-sms.com';
   `);
 };
