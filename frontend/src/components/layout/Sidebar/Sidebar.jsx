@@ -31,7 +31,10 @@ export default function Sidebar({ isVisible = true }) {
   };
 
   return (
-    <aside className={`${styles.sidebar} ${isVisible ? "" : styles.sidebarCollapsed}`}>
+    <aside  className={`${styles.sidebar} ${
+                        isVisible ? styles.sidebarVisible : styles.sidebarCollapsed
+                      }`}
+                    >
 
       {/* Logo */}
 

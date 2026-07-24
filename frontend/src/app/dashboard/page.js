@@ -17,7 +17,13 @@ export default function Dashboard() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+ const [isSidebarVisible, setIsSidebarVisible] = useState(() => {
+  if (typeof window === "undefined") return true;
+
+  // Desktop: visible
+  // Mobile: hidden
+  return window.innerWidth > 768;
+});
 
   useEffect(() => {
     const handleSidebarToggle = () => {
@@ -30,6 +36,23 @@ export default function Dashboard() {
       window.removeEventListener("smart-sms-sidebar-toggle", handleSidebarToggle);
     };
   }, []);
+
+
+  useEffect(() => {
+      const handleResize = () => {
+        if (window.innerWidth <= 768) {
+          setIsSidebarVisible(false);
+        } else {
+          setIsSidebarVisible(true);
+        }
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -116,8 +139,10 @@ export default function Dashboard() {
       <main
         style={{
           marginLeft: isSidebarVisible ? 280 : 0,
-          padding: 40,
+          padding: "40px 40px 40px 40px",
           transition: "margin-left 0.3s ease",
+          width: isSidebarVisible ? "calc(100% - 280px)" : "100%",
+          boxSizing: "border-box",
         }}
       >
 

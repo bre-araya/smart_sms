@@ -243,6 +243,10 @@
     padding: 1rem;
   }
 
+  .logoPanel {
+    display: none;
+  }
+
   .logoPanel,
   .formPanel {
     padding: 1.5rem;
