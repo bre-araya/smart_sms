@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { HiBars3 } from "react-icons/hi2";
 import { useAuth } from "@/hooks/useAuth";
 import styles from "./Header.module.css";
 
@@ -11,25 +12,72 @@ export default function Header() {
   const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const isDashboardRoute = pathname?.startsWith("/dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [toggleHover, setToggleHover] = useState(false);
 
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    const handleSidebarState = (event) => {
+      setSidebarOpen(Boolean(event.detail));
+    };
+
+    window.addEventListener("smart-sms-sidebar-state", handleSidebarState);
+
+    return () => {
+      window.removeEventListener("smart-sms-sidebar-state", handleSidebarState);
+    };
+  }, []);
+
+  const handleSidebarToggle = () => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("smart-sms-sidebar-toggle"));
+    }
+  };
+
+  const renderToggleIcon = () => {
+    if (toggleHover) {
+      return sidebarOpen ? "❮" : "❯";
+    }
+
+    return <HiBars3 />;
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
 
-        {/* Logo */}
-        <Link href="/" className={styles.logo}>
-          <Image
-            src="/school-logo-1.png"
-            alt="School Logo"
-            width={50}
-            height={50}
-          />
-          <span>𝐘𝐎𝐘𝐎  ACADEMY</span>
-        </Link>
+        {/* Sidebar Toggle */}
+          {isDashboardRoute && (
+            <button
+              type="button"
+              className={styles.menuToggle}
+              onClick={handleSidebarToggle}
+              onMouseEnter={() => setToggleHover(true)}
+              onMouseLeave={() => setToggleHover(false)}
+              aria-label="Toggle sidebar"
+            >
+              {renderToggleIcon()}
+            </button>
+          )}
+
+
+          {/* Center Logo */}
+          <Link href="/" className={styles.logo}>
+            <Image
+              src="/school-logo-1.png"
+              alt="School Logo"
+              width={50}
+              height={50}
+            />
+
+            <span>
+              𝐘𝐎𝐘𝐎 ACADEMY
+            </span>
+          </Link>
 
         {/* Navigation */}
         <nav className={styles.nav}>

@@ -12,7 +12,7 @@ import {
 import styles from "./Sidebar.module.css";
 import menuData from "./menuData";
 
-export default function Sidebar() {
+export default function Sidebar({ isVisible = true }) {
 
   const pathname = usePathname();
 
@@ -31,7 +31,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className={styles.sidebar}>
+    <aside className={`${styles.sidebar} ${isVisible ? "" : styles.sidebarCollapsed}`}>
 
       {/* Logo */}
 
